@@ -20,6 +20,12 @@ pipeline {
            }
        }
 
+       stage('Check WireMock') {
+           steps {
+               bat 'curl http://localhost:8081/__admin'
+           }
+       }
+
         stage('Build & Test') {
             steps {
                 bat '''
