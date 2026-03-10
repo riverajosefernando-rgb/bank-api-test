@@ -13,8 +13,7 @@ pipeline {
        stage('Start WireMock') {
            steps {
                bat '''
-               cd src/test/resources/wiremock
-               start "" /B java -jar wiremock-standalone-3.13.2.jar --port 8081
+               start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081 --root-dir src/test/resources/wiremock
                ping 127.0.0.1 -n 10 > nul
                '''
            }
@@ -23,6 +22,12 @@ pipeline {
        stage('Check WireMock') {
            steps {
                bat 'curl http://localhost:8081/__admin'
+           }
+       }
+
+       stage('Check Mappings') {
+           steps {
+               bat 'curl http://localhost:8081/__admin/mappings'
            }
        }
 
