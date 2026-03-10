@@ -9,31 +9,30 @@ pipeline {
 
         stages {
 
-            stage('Checkout Code') {
-                steps {
-                    git branch: 'main', url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
+                stage('Checkout Code') {
+                    steps {
+                        git branch: 'main', url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
+                    }
                 }
-            }
 
-            stage('Build Project') {
-                steps {
-                    bat 'gradlew.bat clean build'
+                stage('Verify Java Version') {
+                    steps {
+                        bat 'java -version'
+                    }
                 }
-            }
 
-            stage('Run Karate Tests') {
-                steps {
-                    bat 'gradlew.bat test'
+                stage('Build & Test') {
+                    steps {
+                        bat 'gradlew.bat clean test'
+                    }
                 }
-            }
 
-
-            stage('Publish Test Results') {
-                steps {
-                    junit 'build/test-results/test/*.xml'
+                stage('Publish Test Results') {
+                    steps {
+                        junit 'build/test-results/test/*.xml'
+                    }
                 }
-            }
 
-    }
+            }
 
 }
