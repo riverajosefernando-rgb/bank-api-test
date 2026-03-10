@@ -1,0 +1,8 @@
+{
+  "validTransfer": {
+    "fromAccount": "100200300",
+    "toAccount": "400500600",
+    "amount": 150,
+    "currency": "USD"
+  }
+}
