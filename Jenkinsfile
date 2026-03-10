@@ -18,7 +18,7 @@ pipeline {
                 stage('Set Java') {
                     steps {
                         bat '''
-                        set JAVA_HOME=C:\\Users\\Usuario\\.jdks\\ms-17.0.18'
+                        set JAVA_HOME=C:\\Users\\Usuario\\.jdks\\ms-17.0.18
                         set PATH=%JAVA_HOME%\\bin;%PATH%
                          '''
                     }
