@@ -11,7 +11,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/tu-repo/bank-api-test.git'
+                git 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
             }
         }
 
