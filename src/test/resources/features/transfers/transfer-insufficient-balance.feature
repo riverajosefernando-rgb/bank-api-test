@@ -9,7 +9,7 @@ Feature: Transfer with insufficient balance
 
     * url baseUrl
     * header Authorization = 'Bearer ' + token
-  @test1
+
   Scenario: Transfer fails due to insufficient funds
 
     * def fromAccount = "1001"

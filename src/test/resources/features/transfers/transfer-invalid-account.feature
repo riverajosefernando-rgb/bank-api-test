@@ -8,7 +8,6 @@ Feature: Transfer to invalid account
     * url baseUrl
     * header Authorization = 'Bearer ' + token
 
-  @test
   Scenario: Invalid destination account
 
     * def fromAccount = "1001"

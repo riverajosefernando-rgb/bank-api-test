@@ -11,7 +11,6 @@ Feature: Bank Transfer API
     * header Authorization = 'Bearer ' + token
     * header Content-Type = 'application/json'
 
-    @test1
   Scenario: Successful transfer
 
     * def fromAccount = "1001"
