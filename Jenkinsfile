@@ -10,14 +10,14 @@ pipeline {
             }
         }
 
-        stage('Start WireMock') {
-            steps {
-                bat '''
-                start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081 --root-dir resources/wiremock/mappings
-                ping 127.0.0.1 -n 10 > nul
-                '''
-            }
-        }
+       stage('Start WireMock') {
+           steps {
+               bat '''
+               start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081 --root-dir src/test/resources/wiremock
+               ping 127.0.0.1 -n 10 > nul
+               '''
+           }
+       }
 
         stage('Build & Test') {
             steps {
