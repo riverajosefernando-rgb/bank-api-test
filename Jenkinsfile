@@ -7,38 +7,32 @@ pipeline {
         jdk 'JDK17'
     }
 
-    stages {
+        stages {
 
-        stage('Checkout Code') {
-            steps {
-                git 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
+            stage('Checkout Code') {
+                steps {
+                    git branch: 'main', url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
+                }
             }
-        }
 
-        stage('Build Project') {
-            steps {
-                sh 'gradle clean build -x test'
+            stage('Build Project') {
+                steps {
+                    bat 'gradlew.bat clean build'
+                }
             }
-        }
 
-        stage('Start WireMock') {
-            steps {
-                sh 'nohup java -jar wiremock/wiremock.jar --port 8081 &'
-                sh 'sleep 10'
+            stage('Run Karate Tests') {
+                steps {
+                    bat 'gradlew.bat test'
+                }
             }
-        }
 
-        stage('Run Karate Tests') {
-            steps {
-                sh 'gradle test'
-            }
-        }
 
-        stage('Publish Test Results') {
-            steps {
-                junit 'build/test-results/test/*.xml'
+            stage('Publish Test Results') {
+                steps {
+                    junit 'build/test-results/test/*.xml'
+                }
             }
-        }
 
     }
 
