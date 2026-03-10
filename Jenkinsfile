@@ -17,7 +17,7 @@ pipeline {
 
                 stage('Set Java') {
                     steps {
-                        bat 'set JAVA_HOME=C:\Users\Usuario\.jdks\ms-17.0.18'
+                        bat 'set JAVA_HOME=C:\\Users\\Usuario\\.jdks\\ms-17.0.18'
                         bat 'java -version'
                     }
                 }
