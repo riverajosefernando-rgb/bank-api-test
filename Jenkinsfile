@@ -36,6 +36,16 @@ pipeline {
             }
         }
 
+        stage('Publish Karate Report') {
+            steps {
+                publishHTML([
+                    reportDir: 'build/karate-reports',
+                    reportFiles: 'karate-summary.html',
+                    reportName: 'Karate API Test Report'
+                ])
+            }
+        }
+
     }
 
 }
