@@ -11,13 +11,13 @@ pipeline {
         }
 
         stage('Start WireMock') {
-                    steps {
-                        bat '''
-                        start /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081
-                        ping 127.0.0.1 -n 10 > nul
-                        '''
-                    }
-                }
+            steps {
+                bat '''
+                start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081
+                ping 127.0.0.1 -n 10 > nul
+                '''
+            }
+        }
 
         stage('Build & Test') {
             steps {
@@ -39,6 +39,9 @@ pipeline {
         stage('Publish Karate Report') {
             steps {
                 publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
                     reportDir: 'build/karate-reports',
                     reportFiles: 'karate-summary.html',
                     reportName: 'Karate API Test Report'
