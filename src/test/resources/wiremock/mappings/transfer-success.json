@@ -5,13 +5,12 @@
   },
   "response": {
     "status": 200,
-    "jsonBody": {
-      "status": "SUCCESS",
-      "transactionId": "123456",
-      "message": "Transfer completed"
-    },
     "headers": {
       "Content-Type": "application/json"
+    },
+    "jsonBody": {
+      "status": "SUCCESS",
+      "transactionId": "TX123456"
     }
   }
 }
