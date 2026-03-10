@@ -11,7 +11,7 @@ Feature: Bank Transfer API
 #    * header Authorization = 'Bearer ' + token
     * header Content-Type = 'application/json'
 
-    @wiremock
+  @wiremock
   Scenario: Successful transfer
 
     * def fromAccount = "1001"
@@ -26,5 +26,5 @@ Feature: Bank Transfer API
 
     Then status 200
 
-      And match response == { status: "SUCCESS" }
-#      And match response.transactionId != null
+    And match response.status == "SUCCESS"
+    And match response.transactionId != null
