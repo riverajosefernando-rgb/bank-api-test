@@ -7,7 +7,7 @@ class TestRunner {
     @Karate.Test
     Karate testAll() {
         return Karate.run("classpath:features")
-                .tags("@test")   // ejecuta solo escenarios con este tag
+                .tags("@wiremock")   // ejecuta solo escenarios con este tag
                 .relativeTo(getClass());
     }
 }
