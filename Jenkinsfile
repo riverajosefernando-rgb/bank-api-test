@@ -10,6 +10,15 @@ pipeline {
             }
         }
 
+        stage('Start WireMock') {
+                    steps {
+                        bat '''
+                        start /B java -jar wiremock/wiremock-standalone-3.13.2.jar --port 8081
+                        timeout /t 10
+                        '''
+                    }
+                }
+
         stage('Build & Test') {
             steps {
                 bat '''
