@@ -12,7 +12,7 @@ class TestRunner {
     void testAll() {
 
         Results results = Runner.path("classpath:features")
-                .tags("@wiremock")
+                .tags(System.getProperty("karate.options"))
                 .parallel(5);
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
