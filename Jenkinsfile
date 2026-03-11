@@ -14,6 +14,7 @@ pipeline {
            steps {
                bat '''
                start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081 --root-dir src/test/resources/wiremock
+               gradlew.bat clean test -Dkarate.options="--tags %TAGS%"
                ping 127.0.0.1 -n 10 > nul
                '''
            }

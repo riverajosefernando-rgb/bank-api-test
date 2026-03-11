@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance/123"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "account": "123",
+      "balance": 1000
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

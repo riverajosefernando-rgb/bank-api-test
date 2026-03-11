@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/login"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "token": "abc123xyz"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -278,6 +278,16 @@ karate-summary.html
 
 ---
 
+## Pipeline CI/CD
+
+El pipeline de Jenkins realiza:
+
+1. Checkout del código
+2. Levantar WireMock
+3. Ejecutar pruebas Karate
+4. Publicar resultados JUnit
+5. Publicar reporte HTML
+
 # 🧠 Buenas prácticas aplicadas
 
 * separación de datos de prueba
@@ -298,7 +308,6 @@ Este proyecto puede ampliarse agregando:
 * límite de transferencias diarias
 * generación de datos aleatorios
 * ejecución paralela de tests
-* integración con CI/CD
 * pruebas de carga
 
 ---
