@@ -1,13 +1,20 @@
 package runners;
 
-import com.intuit.karate.junit5.Karate;
+import com.intuit.karate.Results;
+import com.intuit.karate.Runner;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestRunner {
 
-    @Karate.Test
-    Karate testAll() {
-        return Karate.run("classpath:features")
-                .tags("@wiremock")   // ejecuta solo escenarios con este tag
-                .relativeTo(getClass());
+    @Test
+    void testAll() {
+
+        Results results = Runner.path("classpath:features")
+                .tags("@wiremock")
+                .parallel(5);
+
+        assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
 }

@@ -48,18 +48,18 @@ pipeline {
             }
         }
 
-        stage('Publish Karate Report') {
-            steps {
-                publishHTML([
-                    allowMissing: true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'build/karate-reports',
-                    reportFiles: 'karate-summary.html',
-                    reportName: 'Karate API Test Report'
-                ])
-            }
-        }
+       stage('Publish Karate Report') {
+           steps {
+               publishHTML([
+                   allowMissing: true,
+                   alwaysLinkToLastBuild: true,
+                   keepAll: true,
+                   reportDir: 'build/karate-reports',
+                   reportFiles: 'karate-summary.html,karate-timeline.html,karate-tags.html',
+                   reportName: 'Karate API Test Report'
+               ])
+           }
+       }
 
     }
 
