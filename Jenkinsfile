@@ -45,7 +45,7 @@ pipeline {
                 set JAVA_HOME=C:\\Users\\Usuario\\.jdks\\ms-17.0.18
                 set PATH=%JAVA_HOME%\\bin;%PATH%
                 java -version
-                gradlew.bat clean test -Dkarate.tags="${params.TAGS}"
+                gradlew.bat clean test -Dkarate.tags=${params.TAGS}
                 """
             }
         }
