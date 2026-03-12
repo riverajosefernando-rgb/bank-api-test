@@ -1,3 +1,4 @@
+@wiremock
 Feature: Bank Transfer API
 
   Background:
@@ -11,7 +12,7 @@ Feature: Bank Transfer API
 #    * header Authorization = 'Bearer ' + token
     * header Content-Type = 'application/json'
 
-  @wiremock
+  @transfers
   Scenario: Successful transfer
 
     * def fromAccount = "1001"
