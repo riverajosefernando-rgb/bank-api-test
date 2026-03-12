@@ -1,12 +1,35 @@
 package runners;
 
-import com.intuit.karate.junit5.Karate;
+import com.intuit.karate.Results;
+import com.intuit.karate.Runner;
+import org.junit.jupiter.api.Test;
 
-class KarateTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @Karate.Test
-    Karate runTests() {
-        return Karate.run("classpath:features");
+public class KarateTest {
+
+    @Test
+    void runTests() {
+
+        String tags = System.getProperty("karate.tags");
+
+        Results results;
+
+        if (tags != null && !tags.isEmpty()) {
+            results = Runner.path("classpath:features")
+                    .tags(tags)
+                    .parallel(5);
+        } else {
+            results = Runner.path("classpath:features")
+                    .parallel(5);
+        }
+
+        System.out.println("===================================");
+        System.out.println("Features executed : " + results.getFeaturesTotal());
+        System.out.println("Scenarios executed: " + results.getScenariosTotal());
+        System.out.println("Failures          : " + results.getFailCount());
+        System.out.println("===================================");
+
+        assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
-
 }
