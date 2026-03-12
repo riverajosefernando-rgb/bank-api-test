@@ -13,18 +13,16 @@ public class KarateTest {
 
         String tags = System.getProperty("karate.tags");
 
-        Results results;
+        Runner.Builder runner = Runner.path("classpath:features");
 
         if (tags != null && !tags.isEmpty()) {
-            results = Runner.path("classpath:features")
-                    .tags(tags)
-                    .parallel(5);
-        } else {
-            results = Runner.path("classpath:features")
-                    .parallel(5);
+            runner.tags(tags);
         }
 
+        Results results = runner.parallel(5);
+
         System.out.println("===================================");
+        System.out.println("Tags              : " + tags);
         System.out.println("Features executed : " + results.getFeaturesTotal());
         System.out.println("Scenarios executed: " + results.getScenariosTotal());
         System.out.println("Failures          : " + results.getFailCount());
