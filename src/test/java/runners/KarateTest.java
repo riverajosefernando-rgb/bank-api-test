@@ -13,9 +13,14 @@ public class KarateTest {
 
         String tags = System.getProperty("karate.options");
 
-        Results results = Runner.path("classpath:features")
-                .tags(tags)
-                .parallel(5);
+        Runner.Builder runner = Runner.path("classpath:features");
+
+        if (tags != null) {
+            tags = tags.replace("@", "").trim();   // 👈 quitar @
+            runner = runner.tags(tags);
+        }
+
+        Results results = runner.parallel(5);
 
         System.out.println("Features executed: " + results.getFeaturesTotal());
         System.out.println("Scenarios executed: " + results.getScenariosTotal());
