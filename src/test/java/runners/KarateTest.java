@@ -1,12 +1,27 @@
 package runners;
 
-import com.intuit.karate.junit5.Karate;
+import com.intuit.karate.Results;
+import com.intuit.karate.Runner;
+import org.junit.jupiter.api.Test;
 
-class KarateTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @Karate.Test
-    Karate runTests() {
-        return Karate.run("classpath:features");
+public class KarateTest {
+
+    @Test
+    void runTests() {
+
+        String tags = System.getProperty("karate.options");
+
+        Runner.Builder runner = Runner.path("classpath:features");
+
+        if (tags != null) {
+            tags = tags.replace("--tags", "").trim();
+            runner = runner.tags(tags);
+        }
+
+        Results results = runner.parallel(5);
+
+        assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
-
 }
