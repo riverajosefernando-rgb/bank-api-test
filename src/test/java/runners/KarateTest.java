@@ -16,7 +16,7 @@ public class KarateTest {
         Runner.Builder runner = Runner.path("classpath:features");
 
         if (tags != null && !tags.isEmpty()) {
-            runner.tags(tags);
+            runner.tags(tags.split(","));
         }
 
         Results results = runner.parallel(5);
