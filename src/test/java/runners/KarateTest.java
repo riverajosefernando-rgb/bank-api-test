@@ -11,15 +11,18 @@ public class KarateTest {
     @Test
     void testAll() {
 
-        String tag = System.getProperty("karate.options");
+        String karateOptions = System.getProperty("karate.options");
 
-        if (tag != null && tag.contains("--tags")) {
-            tag = tag.replace("--tags", "").trim();
+        Runner.Builder runner = Runner.path("classpath:features");
+
+        if (karateOptions != null && karateOptions.contains("--tags")) {
+            String tag = karateOptions.replace("--tags", "").trim();
+            runner = runner.tags(tag);
         }
 
-        Results results = Runner.path("classpath:features")
-                .tags(tag)
-                .parallel(5);
+        Results results = runner.parallel(5);
+
+        System.out.println("Scenarios executed: " + results.getScenariosTotal());
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
