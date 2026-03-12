@@ -11,16 +11,11 @@ public class KarateTest {
     @Test
     void runTests() {
 
-        String karateOptions = System.getProperty("karate.options");
+        String tags = System.getProperty("karate.options");
 
-        Runner.Builder runner = Runner.path("classpath:features");
-
-        if (karateOptions != null && karateOptions.contains("--tags")) {
-            String tag = karateOptions.replace("--tags", "").trim();
-            runner = runner.tags(tag);
-        }
-
-        Results results = runner.parallel(5);
+        Results results = Runner.path("classpath:features")
+                .tags(tags)
+                .parallel(5);
 
         System.out.println("Features executed: " + results.getFeaturesTotal());
         System.out.println("Scenarios executed: " + results.getScenariosTotal());
