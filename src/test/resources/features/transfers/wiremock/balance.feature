@@ -1,4 +1,4 @@
-@wiremok
+@wiremock
 Feature: Account balance
 
   @balance
