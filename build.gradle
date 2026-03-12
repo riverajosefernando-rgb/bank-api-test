@@ -42,5 +42,10 @@ test {
 
     // Set env
     systemProperty "karate.env", System.getProperty("karate.env")
+    systemProperty "karate.tags", System.getProperty("karate.tags")
+
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 
 }
