@@ -11,8 +11,13 @@ class TestRunner {
     @Test
     void testAll() {
 
+        String tags = System.getProperty("karate.options");
+        if (tags != null) {
+            tags = tags.replace("--tags", "").trim();
+        }
+
         Results results = Runner.path("classpath:features")
-                .tags(System.getProperty("karate.options"))
+                .tags(tags)
                 .parallel(5);
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
