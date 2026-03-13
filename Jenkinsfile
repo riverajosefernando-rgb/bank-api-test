@@ -10,6 +10,11 @@ pipeline {
         )
     }
 
+    environment {
+        JAVA_HOME = "C:\\Users\\Usuario\\.jdks\\ms-17.0.18"
+        GRADLE_USER_HOME = "${WORKSPACE}\\.gradle"
+    }
+
     stages {
 
         stage('Checkout Code') {
@@ -18,18 +23,28 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Environment Info') {
             steps {
                 bat """
-                set JAVA_HOME=C:\\Users\\Usuario\\.jdks\\ms-17.0.18
                 set PATH=%JAVA_HOME%\\bin;%PATH%
                 java -version
-                gradlew.bat clean test "-Dkarate.tags=${params.TAGS}"
+                gradlew --version
                 """
             }
         }
 
-        stage('Publish Test Results') {
+        stage('Build & Test') {
+            steps {
+                echo "Running Karate tests with tags: ${params.TAGS}"
+
+                bat """
+                set PATH=%JAVA_HOME%\\bin;%PATH%
+                gradlew.bat clean test "-Dkarate.tags=${params.TAGS}" --no-daemon
+                """
+            }
+        }
+
+        stage('Publish JUnit Results') {
             steps {
                 junit 'build/test-results/test/*.xml'
             }
@@ -42,10 +57,26 @@ pipeline {
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
                     reportDir: 'build/karate-reports',
-                    reportFiles: 'karate-summary.html,karate-timeline.html,karate-tags.html',
+                    reportFiles: 'karate-summary.html',
                     reportName: 'Karate API Test Report'
                 ])
             }
+        }
+
+    }
+
+    post {
+
+        always {
+            archiveArtifacts artifacts: 'build/karate-reports/**/*.*', fingerprint: true
+        }
+
+        success {
+            echo "Karate tests completed successfully 🚀"
+        }
+
+        failure {
+            echo "Karate tests failed ❌"
         }
 
     }
