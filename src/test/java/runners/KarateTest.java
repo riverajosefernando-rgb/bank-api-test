@@ -3,13 +3,20 @@ package runners;
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import utils.WireMockServerManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KarateTest {
 
+    private static final Logger logger = LoggerFactory.getLogger(KarateTest.class);
+
     @Test
     void runTests() {
+
+        WireMockServerManager.start();
 
         String tags = System.getProperty("karate.tags");
 
@@ -20,13 +27,14 @@ public class KarateTest {
         }
 
         Results results = runner.parallel(5);
+        WireMockServerManager.stop();
 
-        System.out.println("===================================");
-        System.out.println("Tags              : " + tags);
-        System.out.println("Features executed : " + results.getFeaturesTotal());
-        System.out.println("Scenarios executed: " + results.getScenariosTotal());
-        System.out.println("Failures          : " + results.getFailCount());
-        System.out.println("===================================");
+        logger.info("===================================");
+        logger.info("Tags              : {}", tags);
+        logger.info("Features executed : {}", results.getFeaturesTotal());
+        logger.info("Scenarios executed: {}", results.getScenariosTotal());
+        logger.info("Failures          : {}", results.getFailCount());
+        logger.info("===================================");
 
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }

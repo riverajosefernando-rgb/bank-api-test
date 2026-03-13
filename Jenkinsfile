@@ -18,27 +18,6 @@ pipeline {
             }
         }
 
-        stage('Start WireMock') {
-            steps {
-                bat '''
-                start "" /B java -jar src/test/resources/wiremock/wiremock-standalone-3.13.2.jar --port 8081 --root-dir src/test/resources/wiremock
-                ping 127.0.0.1 -n 10 > nul
-                '''
-            }
-        }
-
-        stage('Check WireMock') {
-            steps {
-                bat 'curl http://localhost:8081/__admin'
-            }
-        }
-
-        stage('Check Mappings') {
-            steps {
-                bat 'curl http://localhost:8081/__admin/mappings'
-            }
-        }
-
         stage('Build & Test') {
             steps {
                 bat """
