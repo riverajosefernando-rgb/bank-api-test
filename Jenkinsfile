@@ -27,12 +27,10 @@ pipeline {
     stages {
 
         stage('Checkout Code') {
-
             steps {
                 git branch: 'main',
                 url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
             }
-
         }
 
         stage('Environment Info') {
@@ -42,17 +40,15 @@ pipeline {
             }
 
             steps {
-
                 bat """
                 set PATH=%JAVA_HOME%\\bin;%PATH%
                 java -version
-                gradlew --version
+                gradlew.bat --version
                 """
-
             }
         }
 
-        stage('Build & Test') {
+        stage('Build & Test (Local)') {
 
             when {
                 expression { return !params.USE_DOCKER }
@@ -60,17 +56,16 @@ pipeline {
 
             steps {
 
-                echo "Running Karate tests with tags: ${params.TAGS}"
+                echo "Running Karate tests locally with tags: ${params.TAGS}"
 
                 bat """
                 set PATH=%JAVA_HOME%\\bin;%PATH%
                 gradlew.bat clean test --tests runners.KarateJenkinsRunner "-Dkarate.tags=${params.TAGS}" --no-daemon
                 """
-
             }
         }
 
-        stage('Run Tests in Docker') {
+        stage('Build & Test (Docker)') {
 
             when {
                 expression { return params.USE_DOCKER }
@@ -78,22 +73,18 @@ pipeline {
 
             steps {
 
-                echo "Running tests inside Docker"
+                echo "Running tests inside Docker with tags: ${params.TAGS}"
 
                 bat """
                 docker build -t karate-tests .
                 docker run -e KARATE_TAGS=${params.TAGS} karate-tests
                 """
-
             }
         }
 
         stage('Publish JUnit Results') {
-
             steps {
-
                 junit 'build/test-results/test/*.xml'
-
             }
         }
 
@@ -111,7 +102,6 @@ pipeline {
                 ])
 
             }
-
         }
 
         stage('Publish Allure Report') {
@@ -124,7 +114,6 @@ pipeline {
 
                         allure(
                             includeProperties: false,
-                            jdk: '',
                             results: [[path: 'build/allure-results']]
                         )
 
@@ -137,8 +126,9 @@ pipeline {
                 }
 
             }
-
         }
+
+    }
 
     post {
 
