@@ -118,17 +118,27 @@ pipeline {
 
             steps {
 
-                allure(
-                        includeProperties: false,
-                        jdk: '',
-                        results: [[path: 'build/allure-results']]
-                )
+                script {
+
+                    try {
+
+                        allure(
+                            includeProperties: false,
+                            jdk: '',
+                            results: [[path: 'build/allure-results']]
+                        )
+
+                    } catch (err) {
+
+                        echo "Allure plugin not installed, skipping report"
+
+                    }
+
+                }
 
             }
 
         }
-
-    }
 
     post {
 
