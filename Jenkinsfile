@@ -64,7 +64,7 @@ pipeline {
 
                 bat """
                 set PATH=%JAVA_HOME%\\bin;%PATH%
-                gradlew.bat clean test "-Dkarate.tags=${params.TAGS}" --no-daemon
+                gradlew.bat clean test --tests runners.KarateJenkinsRunner "-Dkarate.tags=${params.TAGS}" --no-daemon
                 """
 
             }
