@@ -5,6 +5,7 @@ import com.intuit.karate.Runner;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.WireMockServerManager;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,6 +16,8 @@ public class KarateJenkinsRunner {
     @Test
     void runTests() {
 
+        WireMockServerManager.start();
+
         String tags = System.getProperty("karate.tags");
 
         Runner.Builder runner = Runner.path("classpath:features");
@@ -24,6 +27,7 @@ public class KarateJenkinsRunner {
         }
 
         Results results = runner.parallel(5);
+        WireMockServerManager.stop();
 
         logger.info("===================================");
         logger.info("Tags              : {}", tags);
