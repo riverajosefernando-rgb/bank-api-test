@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+
+  wiremock:
+    image: wiremock/wiremock:3.3.1
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./src/test/resources/wiremock:/home/wiremock
+
+  karate-tests:
+    build: .
+    depends_on:
+      - wiremock
+    environment:
+      - BASE_URL=http://wiremock:8080

@@ -24,6 +24,8 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
 }
 
 test {
@@ -40,6 +42,9 @@ test {
 
     // Ejecutar test en paralelo
     systemProperty "karate.options", "--threads " + threads
+
+    systemProperty "allure.results.directory", "build/allure-results"
+
 
     // Set env
     systemProperty "karate.env", System.getProperty("karate.env")
