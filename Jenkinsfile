@@ -29,7 +29,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
+                    url: 'https://github.com/riverajosefernando-rgb/bank-api-test.git'
             }
         }
 
@@ -73,7 +73,7 @@ pipeline {
 
             steps {
 
-                echo "Running tests inside Docker with tags: ${params.TAGS}"
+                echo "Running Karate tests in Docker with tags: ${params.TAGS}"
 
                 bat """
                 docker build -t karate-tests .
@@ -89,18 +89,15 @@ pipeline {
         }
 
         stage('Publish Karate Report') {
-
             steps {
-
                 publishHTML([
-                        allowMissing: true,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: 'build/karate-reports',
-                        reportFiles: 'karate-summary.html',
-                        reportName: 'Karate API Test Report'
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'build/karate-reports',
+                    reportFiles: 'karate-summary.html',
+                    reportName: 'Karate API Test Report'
                 ])
-
             }
         }
 
@@ -114,17 +111,17 @@ pipeline {
 
                         allure(
                             includeProperties: false,
-                            results: [[path: 'build/allure-results']]
+                            results: [[path: 'build/allure-results']],
+                            reportBuildPolicy: 'ALWAYS'
                         )
 
                     } catch (err) {
 
-                        echo "Allure plugin not installed, skipping report"
+                        echo "Allure not available, skipping report"
 
                     }
 
                 }
-
             }
         }
 
